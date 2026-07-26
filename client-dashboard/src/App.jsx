@@ -11,7 +11,6 @@ function App() {
     }
   ]);
   
-  // A default anomalous log to test with
   const [inputLog, setInputLog] = useState(
     '{\n  "entity_type": "user",\n  "source_ip": "192.168.1.99",\n  "geo_location": "Moscow",\n  "resource_accessed": "port:22",\n  "auth_method": "password",\n  "session_duration": 0.0,\n  "command_sequence": "FAILED_AUTH",\n  "device_fingerprint": "unknown-mac-address"\n}'
   );

@@ -15,7 +15,6 @@ if not os.path.exists(data_path):
 
 df = pd.read_csv(data_path)
 
-# 1. Feature Preprocessing (Baseline Profiling - Deliverable 2)
 print("Encoding and profiling baseline features...")
 features_to_encode = ['entity_type', 'source_ip', 'geo_location', 'resource_accessed', 'auth_method', 'command_sequence', 'device_fingerprint']
 encoders = {}
@@ -28,19 +27,15 @@ for col in features_to_encode:
 feature_cols = ['entity_type', 'source_ip', 'geo_location', 'resource_accessed', 'auth_method', 'session_duration', 'command_sequence', 'device_fingerprint']
 X = X_raw[feature_cols].values
 
-# Scale features to build the "normal" mathematical baseline profile
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
-# Reshape data specifically for LSTM processing: [samples, time_steps, features]
 X_lstm = X_scaled.reshape((X_scaled.shape[0], 1, X_scaled.shape[1]))
 
-# Encode Target Labels for Multi-class classification
 label_encoder = LabelEncoder()
 y_encoded = label_encoder.fit_transform(df['label'])
 y_categorical = to_categorical(y_encoded)
 
-# 2. Build Sequence-Aware LSTM (Deliverable 3)
 print("Building Sequence-Aware LSTM Model...")
 model = Sequential([
     LSTM(64, input_shape=(X_lstm.shape[1], X_lstm.shape[2]), return_sequences=True),
@@ -56,7 +51,6 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 print("Training LSTM Sequence Model (This may take a minute)...")
 model.fit(X_lstm, y_categorical, epochs=5, batch_size=64, validation_split=0.2, verbose=1)
 
-# 3. Save Artifacts for the Flask API Chatbot
 os.makedirs("models", exist_ok=True)
 model.save("models/lstm_detector.h5")
 joblib.dump(scaler, "models/scaler.pkl")
