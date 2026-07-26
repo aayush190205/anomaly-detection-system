@@ -292,9 +292,19 @@ allowing retraining whenever behaviour distributions shift significantly.
 
 ---
 
+---
+
 ## Explainable AI (SHAP)
 
-Every prediction includes SHAP feature attribution scores so analysts understand **why** an event was classified as suspicious.
+The system uses **SHAP (SHapley Additive exPlanations)** to highlight the features that contributed most to each prediction, enabling analysts to understand why an event was classified as normal or anomalous.
+
+### Example
+
+<p align="center">
+  <img src="assets/shap_explanation.png" alt="SHAP Feature Importance" width="900">
+</p>
+
+
 
 Typical influential features include:
 
